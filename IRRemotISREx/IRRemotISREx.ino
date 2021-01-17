@@ -1,3 +1,4 @@
+
 /*************************************************
  Created by Oscar San
 
@@ -11,8 +12,8 @@
 #include <avr/sleep.h>
 #include "IRRemotISR.h"
 
-#define IR_PIN 2     // Pin connected to the IR receiver.
-#define IR_PIN_VCC 3 // Pin connected to the IR receiver.
+#define IR_PIN 2     // Pin connected to the IR receiver signal.
+#define IR_PIN_VCC 3 // Pin connected to the IR receiver VCC.
 
 IRRemotISR IRRemot = IRRemotISR(IR_PIN);
 
@@ -51,23 +52,22 @@ void handleRemote(uint32_t irCode)
     case KEY_POWER:
       Serial.println("power");
       while (true) {
-        digitalWrite(LED_BUILTIN, LOW);   // turn the LED on
+        digitalWrite(LED_BUILTIN, LOW);   
+        // Put processor to sleep 
         power_all_disable();
         set_sleep_mode(SLEEP_MODE_PWR_DOWN);
         sleep_mode();
-        // Processor is currently asleep and will wake up when the IR receiver pin
-        // is at a low value (i.e. when a IR command is received).
-        // Sleep resumes here.  When awake power everything back up.
+        // Processor is currently asleep due to interrupts 
         power_all_enable();
         Serial.print(".");
         while (IRRemot.receivingCode()) {
-          digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on
+          digitalWrite(LED_BUILTIN, HIGH);
           uint32_t result = IRRemot.readIR();
           if (result == KEY_POWER) {
-            return false;
+            return;
           }
         }
-        digitalWrite(LED_BUILTIN, LOW);   // turn the LED off
+        digitalWrite(LED_BUILTIN, LOW);  
       }
       break;
     case KEY_RED:

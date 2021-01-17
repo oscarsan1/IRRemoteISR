@@ -181,8 +181,8 @@ class IRRemotISR {
   /*!
     @brief   repeat calling this function in a loop to read IR Code
     @param   x  
-    @return  0 if no code readed
-             32 bit unsigned with the code readed.
+    @return  0 if no code received
+             32 bit unsigned with the code received.
   */
     uint32_t readIR(void);
 

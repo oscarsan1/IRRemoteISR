@@ -54,8 +54,8 @@ uint32_t IRRemotISR::readIR(void)
         Serial.print(F("ISr durations-> "));
         Serial.println(ISR_Durations[0]); 
         for (uint8_t i = 0; i < 64; i++) {
-        Serial.print(ISR_Durations[i+1]); Serial.print(F(" "));
-        if (((i+1)%8)==0) Serial.print(F("\n"));
+          Serial.print(ISR_Durations[i+1]); Serial.print(F(" "));
+          if (((i+1)%8)==0) Serial.print(F("\n"));
         } 
     #endif
  
